@@ -47,29 +47,31 @@ BCAlbumController.prototype.pullAudio = function() {
     return;
   }
 
-  $.ajax({
-    url: url,
-    type: 'GET',
-    dataType: 'jsonp',
-    success: function(res) {
-      controller.hasAudio = true;
-      var tracks = res.tracks;
-      $.each(tracks, function(i) {
-        var src = tracks[i].streaming_url;
-        $('body').append(
-          '<audio data-title="'+tracks[i].title+'" preload="auto" src="'+src+'"></audio>'
-        );
-        $('audio:last').bind('timeupdate', function(e) {
-          var audio = e.currentTarget;
-          if (audio.duration === audio.currentTime) {
-            controller.next();
-          }
-          $(window).trigger('timeupdate.bc', audio);
+  setTimeout(function() {
+    $.ajax({
+      url: url,
+      type: 'GET',
+      dataType: 'jsonp',
+      success: function(res) {
+        controller.hasAudio = true;
+        var tracks = res.tracks;
+        $.each(tracks, function(i) {
+          var src = tracks[i].streaming_url;
+          $('body').append(
+            '<audio data-title="'+tracks[i].title+'" preload="auto" src="'+src+'"></audio>'
+          );
+          $('audio:last').bind('timeupdate', function(e) {
+            var audio = e.currentTarget;
+            if (audio.duration === audio.currentTime) {
+              controller.next();
+            }
+            $(window).trigger('timeupdate.bc', audio);
+          });
         });
-      });
-      $(window).trigger('gotAudio.bc');
-    }
-  });
+        $(window).trigger('gotAudio.bc');
+      }
+    });
+  }, 100);
 };
 
 BCAlbumController.prototype.play = function() {

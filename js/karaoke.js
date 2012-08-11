@@ -1,5 +1,5 @@
 (function() {
-  if ($.browser.msie || $.browser.opera) {
+  if ($.browser.msie || $.browser.opera || $.browser.mozilla) {
     window.location.href =
         'http://triggerman.bandcamp.com/album/lights-out-in-circle-city';
     return;
