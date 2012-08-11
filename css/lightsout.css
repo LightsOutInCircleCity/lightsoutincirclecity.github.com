@@ -18,6 +18,8 @@ a, a:visited {
   color: white;
   text-decoration: none;
   -webkit-transition:opacity 500ms;
+  -moz-transition:opacity 500ms;
+  transition:opacity 500ms;
   font-weight:bold;
 }
 
@@ -31,6 +33,10 @@ a:hover {
   left:0;
   -webkit-transition: -webkit-transform 750ms;
   -webkit-transform: translate3d(0px, 0px, 0px);
+  -moz-transition: -webkit-transform 750ms;
+  -moz-transform: translate3d(0px, 0px, 0px);
+  transition: -webkit-transform 750ms;
+  transform: translate3d(0px, 0px, 0px);
   height:100%;
   width:100%;
   min-width:800px;
@@ -38,14 +44,20 @@ a:hover {
 
 #motion.prologue {
   -webkit-transform:translate3d(0px, -100%, 0px);
+  -moz-transform:translate3d(0px, -100%, 0px);
+  transform:translate3d(0px, -100%, 0px);
 }
 
 #motion.songs {
   -webkit-transform:translate3d(0px, -200%, 0px);
+  -moz-transform:translate3d(0px, -200%, 0px);
+  transform:translate3d(0px, -200%, 0px);
 }
 
 #motion.epilogue {
   -webkit-transform:translate3d(0px, -300%, 0px);
+  -moz-transform:translate3d(0px, -300%, 0px);
+  transform:translate3d(0px, -300%, 0px);
 }
 
 #cover {
@@ -110,6 +122,8 @@ a:hover {
   font-size:16px;
   opacity:0.3;
   -webkit-transition:opacity 1s;
+  -moz-transition:opacity 1s;
+  transition:opacity 1s;
 }
 
 #prologue {
@@ -260,6 +274,8 @@ a:hover {
   top:0;
   left:40px;
   -webkit-transition-duration: 200ms;
+  -moz-transition-duration: 200ms;
+  transition-duration: 200ms;
   padding:0;
 }
 
@@ -417,6 +433,8 @@ ul#songs {
 #menu #extended_menu.hidden {
   opacity:0;
   -webkit-transform: translateX(10px);
+  -moz-transform: translateX(10px);
+  transform: translateX(10px);
   cursor:default !important;
 }
 
@@ -424,6 +442,10 @@ ul#songs {
   opacity:1;
   -webkit-transition: all 300ms;
   -webkit-transform: translateX(0px);
+  -moz-transition: all 300ms;
+  -moz-transform: translateX(0px);
+  transition: all 300ms;
+  transform: translateX(0px);
   margin-top:10px;
 }
 
