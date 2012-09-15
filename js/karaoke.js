@@ -79,10 +79,8 @@
     var hasLoaded = 0;
     $('audio').bind('canplaythrough', function() {
       hasLoaded++;
-      $('#cover p').html('Loaded ' + hasLoaded + ' of 6 songs&hellip;');
+      $('#cover p').html('Preloaded ' + hasLoaded + ' of 6 songs. Click to continue&hellip;');
       if (hasLoaded >= needsLoad) {
-        build();
-        $('#cover').addClass('can_continue');
         $('#cover p').html('Click to continue&hellip;');
         $('title').text('Lights Out in Circle City');
       }
@@ -242,4 +240,6 @@
       $container.css('translateY', newTranslate);
     }
   });
+
+  build();
 }());

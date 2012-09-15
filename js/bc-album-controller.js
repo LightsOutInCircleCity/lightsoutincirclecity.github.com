@@ -99,12 +99,14 @@ BCAlbumController.prototype.playPause = function() {
 BCAlbumController.prototype.stop = function() {
   if (!this.hasAudio) return false;
   if (!this.$current) return;
+  var ctrl = this;
   var current = this.$current.get(0);
-  current.currentTime = 0;
-  current.pause();
-  this.playing = false;
-  this.$current = null;
-  $(window).trigger('paused.bc');
+  this.setCurrentTime(current, 0, function() {
+    current.pause();
+    ctrl.playing = false;
+    ctrl.$current = null;
+    $(window).trigger('paused.bc');
+  });
 };
 
 BCAlbumController.prototype.next = function() {
@@ -136,7 +138,7 @@ BCAlbumController.prototype.prev = function() {
     }
     this.seekTo($prev);
   } else {
-    this.$current.get(0).currentTime = 0;
+    this.setCurrentTime(this.$current.get(0), 0);
   }
 };
 
@@ -146,8 +148,9 @@ BCAlbumController.prototype.seekTo = function($seek, offset) {
   if (this.$current !== $seek) {
     if (this.$current) {
       current = this.$current.get(0);
-      current.currentTime = 0;
+      var ctrl = this;
       current.pause();
+      current.currentTime = 0;
     }
 
     this.$current = $seek;
@@ -156,10 +159,27 @@ BCAlbumController.prototype.seekTo = function($seek, offset) {
 
   if (typeof offset !== 'undefined') {
     current = this.$current.get(0);
-    current.currentTime = offset;
+    this.setCurrentTime(current, offset, null);
   }
 
   offset = offset || 0;
 
   $(window).trigger('seekedTo.bc', {audio: $seek, offset: offset});
+};
+
+BCAlbumController.prototype.setCurrentTime = function(audio, time, callback) {
+  var self = this;
+  try {
+    audio.currentTime = time;
+    if (callback) callback();
+  } catch(err) {
+    var $audio = $(audio);
+    var src = $audio.attr('src');
+    $audio.attr('src', '');
+    setTimeout(function() {
+      $audio.attr('src', src);
+      if (audio.load) audio.load();
+      self.setCurrentTime(audio, time, callback);
+    }, 100);
+  }
 };
