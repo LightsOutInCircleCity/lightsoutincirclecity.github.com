@@ -150,7 +150,7 @@ BCAlbumController.prototype.seekTo = function($seek, offset) {
       current = this.$current.get(0);
       var ctrl = this;
       current.pause();
-      current.currentTime = 0;
+      this.setCurrentTime(current, 0);
     }
 
     this.$current = $seek;
